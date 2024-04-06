@@ -9,17 +9,18 @@ const hebrewLetters = [
     'נ', 'ן', 'ס', 'ע', 'פ', 'ף', 'צ', 'ץ', 'ק', 'ר', 'ש', 'ת'
 ];
 
-const delay = 1000;
-
 export default function Home() {
     const [currentLetterIndex, setCurrentLetterIndex] = useState<number>(0);
     const [intervalId, setIntervalId] = useState<any>(null);
     const [currentWord, setCurrentWord] = useState<string>("");
     const [currentWords, setCurrentWords] = useState<string[]>([]);
     const [isButtonsAvailable, setIsButtonsAvailable] = useState<boolean>(true);
+    const [letterFontSize, setLetterFontSize] = useState<number>(10);
+    const [letterDelaySpeed, setLetterDelaySpeed] = useState<number>(4000);
+
+    const delay = (5000 + 100) - letterDelaySpeed;
 
     const handleLetterSelect = () => {
-        console.log('current interval', intervalId);
         setIsButtonsAvailable(false);
         clearInterval(intervalId);
         setCurrentLetterIndex(0);
@@ -29,14 +30,24 @@ export default function Home() {
             const id = setInterval(() => {
                 setCurrentLetterIndex(prevState => (prevState + 1) % hebrewLetters.length);
             }, delay);
-            console.log('new interval id', id);
             setIntervalId(id);
             setIsButtonsAvailable(true);
-        }, 500);
+        }, 100);
     }
 
     const handleLetterRemove = () => {
+        setIsButtonsAvailable(false);
+        clearInterval(intervalId);
+        setCurrentLetterIndex(0);
         setCurrentWord(prevState => prevState.slice(0, -1));
+
+        setTimeout(() => {
+            const id = setInterval(() => {
+                setCurrentLetterIndex(prevState => (prevState + 1) % hebrewLetters.length);
+            }, delay);
+            setIntervalId(id);
+            setIsButtonsAvailable(true);
+        }, 100);
     }
 
     const handleWordSelect = () => {
@@ -45,24 +56,55 @@ export default function Home() {
     }
 
     useEffect(() => {
-        console.log('init!');
+        if (intervalId) clearInterval(intervalId);
+
         const id = setInterval(() => {
             setCurrentLetterIndex(prevState => (prevState + 1) % hebrewLetters.length);
         }, delay);
-        console.log(id);
         setIntervalId(id);
 
         return () => {
-            console.log('clearing');
             clearInterval(id);
         };
-    }, []);
+    }, [letterDelaySpeed]);
 
 
     return (
         <div className={styles.container}>
             <div className={styles.current_letter_box}>
-                {hebrewLetters[currentLetterIndex]}
+                <div style={{fontSize: `${letterFontSize}em`}}>
+                    {hebrewLetters[currentLetterIndex]}
+                </div>
+                <div style={{
+                    width: '100%', textAlign: 'right',
+                    padding: '0 2rem .5rem 2rem'
+                }}>
+                    <div>גודל אות:</div>
+                    <input type="range"
+                           value={letterFontSize}
+                           min={0.1}
+                           max={20}
+                           onChange={(e) => {
+                               setLetterFontSize(Number(e.target.value));
+                           }}
+                           style={{width: '100%'}}
+                    />
+                </div>
+                <div style={{
+                    width: '100%', textAlign: 'right',
+                    padding: '0 2rem 0rem 2rem'
+                }}>
+                    <div>מהירות:</div>
+                    <input type="range"
+                           value={letterDelaySpeed}
+                           min={2000}
+                           max={5000}
+                           onChange={(e) => {
+                               setLetterDelaySpeed(Number(e.target.value));
+                           }}
+                           style={{width: '100%'}}
+                    />
+                </div>
             </div>
 
             <div className={styles.action_buttons_box}>
