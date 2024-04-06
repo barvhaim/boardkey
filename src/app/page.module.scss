@@ -1,0 +1,101 @@
+.container {
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .current_letter_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 3px solid #efefef;
+    padding-bottom: 1.5rem;
+    font-size: 10em;
+  }
+
+  .current_word {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .title {
+      font-size: 1.25em;
+    }
+
+    .word {
+      font-size: 2em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+  }
+
+  .words_list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    list-style: none;
+  }
+
+  .word_box {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #efefef;
+    margin-bottom: .5rem;
+    font-size: 2em;
+  }
+
+  .action_buttons_box {
+    padding: 1rem;
+
+    .btn_green {
+      background-color: #13aa52;
+      border: 1px solid #13aa52;
+    }
+
+    .btn_red {
+      background-color: #FF4742;
+      border: 1px solid #FF4742;
+    }
+
+    .action_btn {
+      border-radius: 4px;
+      box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+      box-sizing: border-box;
+      color: #fff;
+      cursor: pointer;
+      font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      outline: none;
+      outline: 0;
+      padding: 10px 25px;
+      text-align: center;
+      transform: translateY(0);
+      transition: transform 150ms, box-shadow 150ms;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      margin-right: .5rem;
+    }
+
+    .action_btn:hover {
+      box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+      transform: translateY(-2px);
+    }
+
+    @media (min-width: 768px) {
+      .action_btn {
+        padding: 10px 30px;
+      }
+    }
+  }
+
+}
+
+
+
+
