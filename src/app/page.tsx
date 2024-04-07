@@ -50,6 +50,10 @@ export default function Home() {
         }, 100);
     }
 
+    const handleWordsRemove = () => {
+        setCurrentWords([]);
+    }
+
     const handleWordSelect = () => {
         setCurrentWords(prevState => [...prevState, currentWord]);
         setCurrentWord("");
@@ -115,6 +119,9 @@ export default function Home() {
                 <button className={`${styles.action_btn} ${styles.btn_red}`}
                         disabled={!isButtonsAvailable}
                         onClick={handleLetterRemove}>מחק אות
+                </button>
+                <button className={`${styles.action_btn}`}
+                        onClick={handleWordsRemove}>מחק מילים
                 </button>
             </div>
 
